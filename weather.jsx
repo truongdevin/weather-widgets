@@ -1,5 +1,5 @@
 var React = require('react');
-// var XMLHttpRequest = require('xmlhttprequest');
+
 var Weather = React.createClass({
 
   getInitialState: function(){
@@ -7,9 +7,7 @@ var Weather = React.createClass({
   },
 
   componentDidMount: function(){
-    console.log("component mounted");
     this.getCoordinates(this.getWeather);
-    // this.getWeather();
   },
 
   getCoordinates: function(getWeatherCallback){

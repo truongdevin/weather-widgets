@@ -12,7 +12,7 @@ var Tabs = React.createClass({
     var self = this;
     return(
       <div>
-        <ul>
+        <ul className="tabs">
           {this.props.titles.map(function(el,idx) {
             var style = '';
 

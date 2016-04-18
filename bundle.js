@@ -49,12 +49,14 @@
 	var Tabs = __webpack_require__(166);
 	var Clock = __webpack_require__(167);
 	var Weather = __webpack_require__(168);
+	var Autocomplete = __webpack_require__(169);
 	
 	var Widgets = React.createClass({
 	  displayName: 'Widgets',
 	
 	
 	  render: function () {
+	    var names = ["San Francisco", "San Mateo", "San Bruno", "Bangalore", "Los Angeles"];
 	    var tabTitles = ["title1", "devin", "teja"];
 	    var tabContents = ["content1", "paleboy", "blah"];
 	
@@ -64,7 +66,8 @@
 	      React.createElement(Tabs, { titles: tabTitles,
 	        contents: tabContents }),
 	      React.createElement(Clock, null),
-	      React.createElement(Weather, null)
+	      React.createElement(Weather, null),
+	      React.createElement(Autocomplete, { thingNames: names })
 	    );
 	  }
 	});
@@ -20051,7 +20054,7 @@
 	      null,
 	      React.createElement(
 	        'ul',
-	        null,
+	        { className: 'tabs' },
 	        this.props.titles.map(function (el, idx) {
 	          var style = '';
 	
@@ -20121,7 +20124,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	// var XMLHttpRequest = require('xmlhttprequest');
+	
 	var Weather = React.createClass({
 	  displayName: "Weather",
 	
@@ -20131,9 +20134,7 @@
 	  },
 	
 	  componentDidMount: function () {
-	    console.log("component mounted");
 	    this.getCoordinates(this.getWeather);
-	    // this.getWeather();
 	  },
 	
 	  getCoordinates: function (getWeatherCallback) {
@@ -20210,6 +20211,57 @@
 	}); //weather widget
 	
 	module.exports = Weather;
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var Autocomplete = React.createClass({
+	  displayName: "Autocomplete",
+	
+	
+	  getInitialState: function () {
+	    return { input: "" };
+	  },
+	
+	  handleInput: function (event) {
+	    event.preventDefault();
+	    this.setState({ input: event.currentTarget.value });
+	  },
+	
+	  render: function () {
+	    var self = this;
+	    return React.createElement(
+	      "div",
+	      null,
+	      React.createElement(
+	        "label",
+	        null,
+	        "Location"
+	      ),
+	      React.createElement("input", { type: "text", onInput: this.handleInput, value: this.state.input }),
+	      React.createElement(
+	        "ul",
+	        { className: "suggestions" },
+	        self.props.thingNames.map(function (el, idx) {
+	          var lowerEl = el.toLowerCase();
+	          var lowerInput = self.state.input.toLowerCase();
+	          if (self.state.input && lowerEl.startsWith(lowerInput)) {
+	            return React.createElement(
+	              "li",
+	              { key: idx, className: el },
+	              el
+	            );
+	          }
+	        })
+	      )
+	    );
+	  }
+	}); //Autocomplete widget
+	
+	module.exports = Autocomplete;
 
 /***/ }
 /******/ ]);
