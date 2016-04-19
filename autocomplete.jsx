@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 var Autocomplete = React.createClass({
 
@@ -17,19 +18,21 @@ var Autocomplete = React.createClass({
 
               <label>Location</label>
               <input type="text" onInput={this.handleInput} value={this.state.input}/>
-              <ul className="suggestions">
+                <ul className="suggestions">
+                  <ReactCSSTransitionGroup transitionName="auto" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
 
-                {self.props.thingNames.map(function(el,idx) {
-                  var lowerEl = el.toLowerCase();
-                  var lowerInput = self.state.input.toLowerCase();
-                  if(self.state.input && lowerEl.startsWith(lowerInput)){
-                  return (
-                          <li key={idx} className={el}>{el}</li>
+                  {self.props.thingNames.map(function(el,idx) {
+                    var lowerEl = el.toLowerCase();
+                    var lowerInput = self.state.input.toLowerCase();
+                    if(self.state.input && lowerEl.startsWith(lowerInput)){
+                    return (
+                            <li key={idx} className={el}>{el}</li>
 
-                        );}
-                  })
-                }
-              </ul>
+                          );}
+                    })
+                  }
+                </ReactCSSTransitionGroup>
+                </ul>
             </div>);
   }
 });//Autocomplete widget
